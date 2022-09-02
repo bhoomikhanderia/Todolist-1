@@ -1,4 +1,4 @@
-# Getting Started with TodList-1
+# Getting Started with TodoList-1
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
