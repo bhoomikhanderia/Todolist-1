@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, Label, Input } from "@zendeskgarden/react-forms";
 import { Row, Col } from "@zendeskgarden/react-grid";
 import { Button } from "@zendeskgarden/react-buttons";
-import { Well } from "@zendeskgarden/react-notifications";
 import styled from "styled-components";
+import { AddTodo } from "../types";
 
-const Container = styled(Well)`
-  margin: ${({ theme }) => theme.space.lg};
-  text-align: center;
-  color: ${({ theme }) => theme.colors.foreground};
-`;
+interface Props {
+  addTodo: AddTodo;
+}
 
 const StyledRow = styled(Row)`
   ${({ theme }) => `
@@ -33,21 +31,35 @@ const StyledButtonCol = styled(Col)`
   margin-bottom: 0px;
 `;
 
-const TodoForm = React.memo(() => {
+const TodoForm = React.memo<Props>(({ addTodo }) => {
+  const [text, setText] = useState("");
+
   return (
-    // <Container isFloating>
     <StyledRow justifyContent="center">
       <StyledLabelCol sm={4}>
         <Field>
           <StyledLabel>Name</StyledLabel>
-          <Input placeholder="Enter Todo" />
+          <Input
+            placeholder="Enter Todo"
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+          />
         </Field>
       </StyledLabelCol>
       <StyledButtonCol textAlign="center" sm={4}>
-        <Button>Add Todo</Button>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            addTodo(text);
+            setText("");
+          }}
+        >
+          Add Todo
+        </Button>
       </StyledButtonCol>
     </StyledRow>
-    // </Container>
   );
 });
 
