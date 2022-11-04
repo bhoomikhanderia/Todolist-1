@@ -10,13 +10,11 @@ const initialTodos: Todo[] = [
     id: 1,
     text: "Feed the birds",
     complete: false,
-    edit: false,
   },
   {
     id: 2,
     text: "Create app testing plan",
     complete: true,
-    edit: false,
   },
 ];
 
@@ -49,11 +47,21 @@ const TodoApp = React.memo<TodoAppProps>(({ theme = DEFAULT_THEME }) => {
   };
 
   const addTodo = (text: string) => {
-    const newTodo = { id: Date.now(), text, complete: false, edit: false };
-    if (newTodo.text.trim() === "") {
-      return;
+    const newTodo = { id: Date.now(), text, complete: false };
+    if (newTodo.text.trim() !== "") {
+      setTodos([...todos, newTodo]);
     }
-    setTodos([...todos, newTodo]);
+  };
+
+  const editTodo = (text: string, id: number) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, text };
+        }
+        return todo;
+      })
+    );
   };
 
   return (
@@ -62,8 +70,10 @@ const TodoApp = React.memo<TodoAppProps>(({ theme = DEFAULT_THEME }) => {
       <TodoForm addTodo={addTodo} />
       <TodoList
         todos={todos}
+        addTodo={addTodo}
         completeTodo={completeTodo}
         deleteTodo={deleteTodo}
+        updateTodo={editTodo}
       />
     </ThemeProvider>
   );

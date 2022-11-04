@@ -8,7 +8,6 @@ interface Todo {
   id: number;
   text: string;
   complete: boolean;
-  edit: boolean;
 }
 
 type CompleteTodo = (selectedTodo: Todo) => void;
@@ -16,3 +15,5 @@ type CompleteTodo = (selectedTodo: Todo) => void;
 type DeleteTodo = (id: number) => void;
 
 type AddTodo = (text: string) => void;
+
+type UpdateTodo = (text: string, id: number) => void;
